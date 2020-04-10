@@ -1,0 +1,28 @@
+		DirectedGraph dg = new DirectedGraph();
+		
+		Node A = new Node("A");
+		Node B = new Node("B");
+		Node C = new Node("C");
+		Node D = new Node("D");
+		Node E = new Node("E");
+		Node F = new Node("F");
+		Node G = new Node("G");
+		Node H = new Node("H");
+		
+		dg.addNode(A);
+		dg.addNode(B);
+		dg.addNode(C);
+		dg.addNode(D);
+		dg.addNode(E);
+		dg.addNode(F);
+		dg.addNode(G);
+		dg.addNode(H);
+		
+		dg.addDirectedEdge(A, B);
+		dg.addDirectedEdge(A, D);
+		dg.addDirectedEdge(C, H);
+		dg.addDirectedEdge(C, G);
+		dg.addDirectedEdge(C, D);
+		dg.addDirectedEdge(D, G);
+		dg.addDirectedEdge(H, E);
+		dg.addDirectedEdge(H, F);
