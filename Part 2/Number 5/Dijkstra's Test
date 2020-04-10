@@ -1,0 +1,60 @@
+		WeightedGraph wg = new WeightedGraph();
+		Node A = new Node("A");
+		Node B = new Node("B");
+		Node C = new Node("C");
+		Node D = new Node("D");
+		Node E = new Node("E");
+		Node F = new Node("F");
+		Node G = new Node("G");
+		Node H = new Node("H");
+		
+		wg.addNode(A);
+		wg.addNode(B);
+		wg.addNode(C);
+		wg.addNode(D);
+		wg.addNode(E);
+		wg.addNode(F);
+		wg.addNode(G);
+		wg.addNode(H);
+		
+		wg.addWeightedEdge(A, B, 2);
+		wg.addWeightedEdge(B, A, 2);
+		
+		wg.addWeightedEdge(B, E, 3);
+		wg.addWeightedEdge(E, B, 3);
+
+		wg.addWeightedEdge(E, G, 7);
+		wg.addWeightedEdge(G, E, 7);
+
+		wg.addWeightedEdge(G, F, 6);
+		wg.addWeightedEdge(F, G, 6);
+
+		wg.addWeightedEdge(C, F, 6);
+		wg.addWeightedEdge(F, C, 6);
+
+		wg.addWeightedEdge(A, C, 4);
+		wg.addWeightedEdge(C, A, 4);
+
+		wg.addWeightedEdge(A, D, 7);
+		wg.addWeightedEdge(D, A, 7);
+
+		wg.addWeightedEdge(D, B, 6);
+		wg.addWeightedEdge(B, D, 6);
+
+		wg.addWeightedEdge(D, F, 10);
+		wg.addWeightedEdge(F, D, 10);
+
+		wg.addWeightedEdge(D, G, 6);
+		wg.addWeightedEdge(G, D, 6);
+
+		wg.addWeightedEdge(G, B, 8);
+		wg.addWeightedEdge(B, G, 8);
+
+		wg.addWeightedEdge(A, F, 5);
+		wg.addWeightedEdge(F, A, 5);
+		
+		HashMap<Node, Integer> minDistances = dijkstras(A);
+		for (Node n : minDistances.keySet()) {
+			System.out.println(n.val + " " + minDistances.get(n));
+		}
+		
