@@ -1,0 +1,73 @@
+		Graph g = new Graph();
+		GridNode _00 = new GridNode(0, 0, "00");
+		GridNode _01 = new GridNode(0, 0, "01");
+		GridNode _02 = new GridNode(0, 0, "02");
+		GridNode _03 = new GridNode(0, 0, "03");
+		GridNode _10 = new GridNode(0, 0, "10");
+		GridNode _11 = new GridNode(0, 0, "11");
+		GridNode _12 = new GridNode(0, 0, "12");
+		GridNode _13 = new GridNode(0, 0, "13");
+		GridNode _20 = new GridNode(0, 0, "20");
+		GridNode _21 = new GridNode(0, 0, "21");
+		GridNode _22 = new GridNode(0, 0, "22");
+		GridNode _23 = new GridNode(0, 0, "23");
+		GridNode _30 = new GridNode(0, 0, "30");
+		GridNode _31 = new GridNode(0, 0, "31");
+		GridNode _32 = new GridNode(0, 0, "32");
+		GridNode _33 = new GridNode(0, 0, "33");
+		
+		g.addGridNode(_00);
+		g.addGridNode(_01);
+		g.addGridNode(_02);
+		g.addGridNode(_03);
+		g.addGridNode(_10);
+		g.addGridNode(_11);
+		g.addGridNode(_12);
+		g.addGridNode(_13);
+		g.addGridNode(_20);
+		g.addGridNode(_21);
+		g.addGridNode(_22);
+		g.addGridNode(_23);
+		g.addGridNode(_30);
+		g.addGridNode(_31);
+		g.addGridNode(_32);
+		g.addGridNode(_33);
+		
+		
+		g.addUndirectedEdge(_00, _10);
+		g.addUndirectedEdge(_20, _10);
+		g.addUndirectedEdge(_30, _20);
+		g.addUndirectedEdge(_30, _31);
+		g.addUndirectedEdge(_32, _31);
+		g.addUndirectedEdge(_32, _33);
+		
+		g.addUndirectedEdge(_00, _01);
+		g.addUndirectedEdge(_02, _01);
+		g.addUndirectedEdge(_02, _12);
+		g.addUndirectedEdge(_12, _11);
+		g.addUndirectedEdge(_11, _21);
+		g.addUndirectedEdge(_21, _22);
+		g.addUndirectedEdge(_32, _22);
+		g.addUndirectedEdge(_32, _33);
+		
+		/*
+		Graph looks like this:
+		
+		00 - 01 - 02   03
+		|		  |	
+		10   11 - 12   13
+		|    | 
+		20   21 - 22   23
+		|	  |	
+		30 - 31 - 32 - 33
+				
+		*/
+		
+		
+		ArrayList<GridNode> path = astar(_00, _33);
+		
+		for (GridNode gn : path) {
+			if (gn!=null)
+				System.out.print(gn.val + " ");
+		}
+		
