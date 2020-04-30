@@ -3,6 +3,7 @@ public class TopSort {
 	
 	public static ArrayList<Node> Kahns(final DirectedGraph graph) {
 		ArrayList<Node> topSort = new ArrayList<Node>();
+		//map to store indegrees of all nodes
 		HashMap<Node, Integer> indegrees = new HashMap<Node, Integer>();
 		for (Node n : graph.getAllNodes()) {
 			for (Node neighbor : n.neighbors) {
@@ -27,6 +28,7 @@ public class TopSort {
 			for (Node neighbor : curr.neighbors) {
 				indegrees.put(neighbor, indegrees.get(neighbor)-1);
 			}
+			//iterate over an array of all indegrees rather than the keySet to prevent concurrent modification
 			for (Object n : indegrees.keySet().toArray()) {
 				if ( indegrees.get((Node)n) == 0) {
 					indegreeOfZero.add((Node)n);

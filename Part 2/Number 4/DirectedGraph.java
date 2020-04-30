@@ -1,32 +1,25 @@
 import java.util.*;
 public class DirectedGraph {
-	HashMap<Node, ArrayList<Node>> adjList = new LinkedHashMap<Node, ArrayList<Node>>();
+	HashSet<Node> adjList = new HashSet<Node>();
 
 	public void addNode(Node node) {
-		adjList.put(node, new ArrayList<Node>());
+		adjList.add(node);
 	}
 	
 	public void addDirectedEdge(final Node first, final Node second) {
-		if (adjList.containsKey(first) && adjList.containsKey(second)) {
-			adjList.get(first).add(second);
+		if (adjList.contains(first) && adjList.contains(second)) {
 			first.neighbors.add(second);
 		}
 	}
 	
 	public void removeDirectedEdge(final Node first, final Node second) {
-		if (adjList.containsKey(first) && adjList.containsKey(second)) {
-			adjList.get(first).remove(second);
-			int firstIndex = first.neighbors.indexOf(second);
-			first.neighbors.remove(firstIndex);
+		if (adjList.contains(first)) {
+			first.neighbors.remove(second);
 		}
 	}
 
 	public HashSet<Node> getAllNodes() {
-		HashSet<Node> ret = new LinkedHashSet<Node>();
-		for (Node n : adjList.keySet()) {
-			ret.add(n);
-		}
-		return ret;
+		return adjList;
 	}
 }
 	

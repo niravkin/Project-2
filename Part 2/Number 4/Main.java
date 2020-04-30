@@ -19,6 +19,14 @@ public class Main {
 	
 	public static void main(String[] args) {
 		DirectedGraph dg = createRandomDAGIter(1000);
+		
+		for (Node n : dg.getAllNodes()) {
+			System.out.print(n.val + ": ");
+			for (Node neighbor : n.neighbors) {
+				System.out.print(neighbor.val + " ");
+			}
+			System.out.println();
+		}
 
 		ArrayList<Node> mDFSPath = TopSort.mDFS(dg);
 		ArrayList<Node> kahnsPath = TopSort.Kahns(dg);
