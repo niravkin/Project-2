@@ -4,10 +4,10 @@ public class GridNode {
 	public int y;
 	public String val;
 	public ArrayList<GridNode> neighbors;
-	public GridNode(final int x, final int y, final String nodeVal) {
+	public GridNode(final int xCor, final int yCor, final String nodeVal) {
 		val = nodeVal;
 		neighbors = new ArrayList<GridNode>();
-		this.x = x;
-		this.y = y;
+		x = xCor;
+		y = yCor;
 	}
 }

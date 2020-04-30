@@ -3,24 +3,16 @@ import java.util.*;
 public class Main {
 	public static class Distance {
 		GridNode node;
-		int distanceFromStart;
-		int estimateToEnd;
-		public Distance(GridNode gn, int g, int h) {
+		int priority;
+		public Distance(GridNode gn, int p) {
 			node = gn;
-			distanceFromStart = g;
-			estimateToEnd = h;
+			priority = p;
 		}
 	}
 	
 	public static class DistanceComparator implements Comparator<Distance> {
 		public int compare(Distance d1, Distance d2) {
-			if (d1.distanceFromStart + d1.estimateToEnd < d2.distanceFromStart + d2.estimateToEnd) {
-				return -1;
-			} else if (d1.distanceFromStart + d1.estimateToEnd > d2.distanceFromStart + d2.estimateToEnd) {
-				return 1;
-			} else {
-				return 0;
-			}
+			return d1.priority - d2.priority;
 		}
 	}
 	
@@ -38,13 +30,12 @@ public class Main {
 
 		for (int x = 0; x < grid.length; x++) {
 			for (int y = 0; y < grid.length; y++) {
-					System.out.println("gridNode is : " + grid[x][y].val);
 					if (x+1 < grid.length) {
-						if (rand.nextInt(100) < 75)
+						if (rand.nextInt(100) < 50)
 							g.addUndirectedEdge(grid[x][y], grid[x+1][y]);
 					}
 					if (y+1 < grid.length) {
-						if (rand.nextInt(100) < 75)
+						if (rand.nextInt(100) < 50)
 							g.addUndirectedEdge(grid[x][y], grid[x][y+1]);
 					}
 			}
@@ -61,10 +52,10 @@ public class Main {
 	
 	public static ArrayList<GridNode> astar(final GridNode sourceNode, final GridNode destNode) {
 		PriorityQueue<Distance> pq = new PriorityQueue<Distance>(new DistanceComparator());
-		HashMap<GridNode, Integer> dist = new LinkedHashMap<GridNode, Integer>();
+		HashMap<GridNode, Integer> dist = new HashMap<GridNode, Integer>();
 		HashMap<GridNode, GridNode> parents = new HashMap<GridNode, GridNode>();
 		dist.put(sourceNode, 0);
-		pq.add(new Distance(sourceNode, 0, heuristic(sourceNode, destNode)));
+		pq.add(new Distance(sourceNode, heuristic(sourceNode, destNode)));
 		parents.put(sourceNode,  null);
 		while (!pq.isEmpty()) {
 			GridNode curr = pq.poll().node;
@@ -74,7 +65,8 @@ public class Main {
 				int newCost = dist.get(curr) + 1;
 				if (!dist.containsKey(neighbor) || newCost < dist.get(neighbor)) {
 					dist.put(neighbor, newCost);
-					pq.add(new Distance(neighbor, newCost, heuristic(neighbor, destNode)));
+					int priority = newCost + heuristic(neighbor, destNode);
+					pq.add(new Distance(neighbor, priority));
 					parents.put(neighbor, curr);
 				}
 			}
