@@ -1,18 +1,17 @@
 import java.util.*;
 public class GraphSearch {
-	private static void DFSRec(final Node start, final Node end, ArrayList<Node> path) {
+	private static void DFSRecHelper(final Node start, final Node end, ArrayList<Node> path, HashSet<Node> visited) {
 		if (start.val == end.val) {
 			path.add(end);
-			return;
+			visited.add(end);
 		} else {
 			path.add(start);
+			visited.add(start);
 			for (Node n: start.neighbors) {
-				if (!path.contains(n))
-					DFSRec(n, end, path);
-				
+				if (!visited.contains(n))
+					DFSRecHelper(n, end, path, visited);
 				int lastIndex = path.size()-1;
 				Node last = path.get(lastIndex);
-				//wrong path
 				if (last != end && last != start) {
 					path.remove(lastIndex);
 				}
@@ -22,7 +21,8 @@ public class GraphSearch {
 	
 	public static ArrayList<Node> DFSRec(final Node start, final Node end) {
 		ArrayList<Node> path = new ArrayList<Node>();
-		DFSRec(start, end, path);
+		HashSet<Node> visited = new HashSet<Node>();
+		DFSRecHelper(start, end, path, visited);
 		if ((path.get(path.size()-1)) != end) {
 			return null;
 		}
@@ -42,7 +42,6 @@ public class GraphSearch {
 			for (Node n: curr.neighbors) {
 				if (!visited.contains(n)) {
 					stack.push(n);
-					//update parent map HERE
 					parents.put(n, curr);
 					visited.add(n);
 					if (n == end) {
@@ -65,7 +64,7 @@ public class GraphSearch {
 		return path;
 	}
 	
-	private static void BFTRec(final Graph graph, ArrayList<Node> path, Queue<Node> queue, HashSet<Node> visited) {
+	private static void BFTRecHelper(final Graph graph, ArrayList<Node> path, Queue<Node> queue, HashSet<Node> visited) {
 		if (!queue.isEmpty()) {
 			Node curr = queue.poll();
 			path.add(curr);
@@ -76,7 +75,7 @@ public class GraphSearch {
 					visited.add(n);
 				}
 			}
-			BFTRec(graph, path, queue, visited);
+			BFTRecHelper(graph, path, queue, visited);
 		}
 	}
 	
@@ -88,7 +87,7 @@ public class GraphSearch {
 			if (!visited.contains(n)) {
 				visited.add(n);
 				queue.add(n);
-				BFTRec(graph, path, queue, visited);
+				BFTRecHelper(graph, path, queue, visited);
 			}
 		}
 		return path;
@@ -97,7 +96,6 @@ public class GraphSearch {
 	
 	
 	public static ArrayList<Node> BFTIter(final Graph graph) {
-		//BFT
 		ArrayList<Node> path = new ArrayList<Node>();
 		Queue<Node> queue = new LinkedList<Node>();
 		HashSet<Node> visited = new HashSet<Node>();
@@ -107,7 +105,7 @@ public class GraphSearch {
 				visited.add(n);
 			}
 			while (!queue.isEmpty()) {
-				Node curr = queue.poll();
+				Node curr = queue.remove();
 				path.add(curr);
 				for (Node node: curr.neighbors) {
 					if (!visited.contains(node)) {

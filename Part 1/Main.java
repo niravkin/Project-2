@@ -4,13 +4,13 @@ public class Main {
 		Graph g = new Graph();
 		Random rand = new Random();
 		for (int i = 0; i < n; i++) {
-			g.addNode(Integer.toString(i));
+			g.addNode(new Node(Integer.toString(i)));
 		}
-		Object[] nodes = g.getAllNodes().toArray();
+		Node[] nodes = g.getAllNodes().toArray(new Node[0]);
 		for (int i = 0; i < nodes.length; i++) {
 			for (int j = i + 1; j < nodes.length; j++) {
 				if (rand.nextBoolean()) {
-					g.addUndirectedEdge((Node)nodes[i], (Node)nodes[j]);
+					g.addUndirectedEdge(nodes[i], nodes[j]);
 				}
 			}
 		}
@@ -20,7 +20,7 @@ public class Main {
 	public static Graph createLinkedList(int n) {
 		Graph g = new Graph();
 		for (int i = 0; i < n; i++) {
-			g.addNode(Integer.toString(i));
+			g.addNode(new Node(Integer.toString(i)));
 		}
 		Object[] nodes = g.getAllNodes().toArray();
 		for (int i = 0; i < nodes.length-1; i++) {
@@ -29,15 +29,16 @@ public class Main {
 		return g;
 	}
 	
-	public static ArrayList<Node> BFTRecLinkedList(final Graph graph) {
-		Graph g = createLinkedList(10000);
-		ArrayList<Node> path = GraphSearch.BFTRec(graph);
-		return path;
+	public static ArrayList<Node> BFTRecLinkedList() {
+		int numNodes = 10000;
+		Graph g = createLinkedList(numNodes);
+		return GraphSearch.BFTRec(g);
 	}
 	
-	public static ArrayList<Node> BFTIterLinkedList(final Graph graph) {
-		ArrayList<Node> path = GraphSearch.BFTIter(graph);
-		return path;
+	public static ArrayList<Node> BFTIterLinkedList() {
+		int numNodes = 10000;
+		Graph g = createLinkedList(numNodes);
+		return GraphSearch.BFTIter(g);
 	}
 	
 	public static void main(String[] args) {
@@ -57,37 +58,35 @@ public class Main {
 			System.out.println();
 		}
 	
-		ArrayList<Node> path = GraphSearch.DFSRec(start, end);
-		ArrayList<Node> path2 = GraphSearch.DFSIter(start, end);
-		ArrayList<Node> path3 = GraphSearch.BFTIter(g);
-		ArrayList<Node> path4 = GraphSearch.BFTRec(g);
+		ArrayList<Node> DFSRecPath = GraphSearch.DFSRec(start, end);
+		ArrayList<Node> DFSIterPath = GraphSearch.DFSIter(start, end);
+		ArrayList<Node> BFTIterPath = GraphSearch.BFTIter(g);
+		ArrayList<Node> BFTRecPath = GraphSearch.BFTRec(g);
+		
+		//Testing recursive DFS
 		System.out.println("Recursive DFS from: " + start.val + " to " + end.val);
-		if (path == null) {
-			System.out.print("No path");
+		if (DFSRecPath == null) {
+			System.out.println("No path");
 		} else {
-			for (Node n : path) {
-				System.out.print(n.val + " ");
-			}
-		}
-		System.out.println();
-		System.out.println("Iterative DFS from: " + start.val + " to " + end.val);
-		if (path2 == null) {
-			System.out.print("No path");
-		} else {
-			for (Node n : path2) {
-				System.out.print(n.val + " ");
-			}
-		}
-		System.out.println();
-		System.out.println("Iterative BFT:");
-		for (Node n: path3) {
-			System.out.print(n.val + " ");
+			System.out.println(DFSRecPath);
 		}
 		
-		System.out.println();
-		System.out.println("Recursive BFT:");
-		for (Node n: path4) {
-			System.out.print(n.val + " ");
+		//Testing iterative DFS
+		System.out.println("Iterative DFS from: " + start.val + " to " + end.val);
+		if (DFSIterPath == null) {
+			System.out.println("No path");
+		} else {
+			System.out.println(DFSIterPath);
 		}
+		
+		
+		//Testing iterative BFT
+		System.out.println("Iterative BFT:");
+		System.out.println(BFTIterPath);
+		
+		
+		//Testing Recursive BFT
+		System.out.println("Recursive BFT:");
+		System.out.println(BFTRecPath);
 	}
 }

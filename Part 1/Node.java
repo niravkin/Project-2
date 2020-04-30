@@ -6,4 +6,8 @@ public class Node {
 		val = nodeVal;
 		neighbors = new ArrayList<Node>();
 	}
+	
+	public String toString() {
+		return val;
+	}
 }
